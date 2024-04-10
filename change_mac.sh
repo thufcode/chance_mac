@@ -8,7 +8,7 @@ echo "Interfaces de rede disponíveis:"
 interfaces=$(ip -o link show | awk -F': ' '{if ($2 != "lo") print $2}' | nl -v 1)
 echo "$interfaces"
 
-echo "Por favor, escolha o número da interface de rede que deseja modificar:"
+echo "Escolha número da interface de rede que deseja modificar:"
 read choice
 
 num_interfaces=$(echo "$interfaces" | wc -l)
@@ -19,7 +19,7 @@ if ! [[ $choice =~ ^[0-9]+$ ]] || [ "$choice" -lt 1 ] || [ "$choice" -gt "$num_i
 fi
 
 INTERFACE=$(echo "$interfaces" | sed -n "${choice}p" | awk '{print $2}')
-echo "Você escolheu a interface: $INTERFACE"
+echo "A interface escolida foi: $INTERFACE"
 
 MAC_ORIGINAL=$(ip link show $INTERFACE | awk '/ether/ {print $2}')
 if [ -z "$MAC_ORIGINAL" ]; then
